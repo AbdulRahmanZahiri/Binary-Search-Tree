@@ -25,7 +25,7 @@ public class TreeController {
     @GetMapping("/enter-numbers")
     public String enterNumbers() { return "enter-numbers"; }
 
-    /** Preview BOTH trees without saving (used by UI to draw diagrams). */
+    /** Preview BOTH trees without saving  */
     @PostMapping("/api/preview-both")
     @ResponseBody
     public BothTreesResponse apiPreviewBoth(@RequestBody ProcessNumbersRequest request) {
@@ -35,7 +35,7 @@ public class TreeController {
         return new BothTreesResponse(regular, balanced, nums);
     }
 
-    /** Persist exactly ONE result (whichever mode the user picked). */
+    /** Persist exactly ONE result  */
     @PostMapping("/api/process-numbers")
     @ResponseBody
     public TreeResult apiProcessNumbers(@RequestBody ProcessNumbersRequest request) {

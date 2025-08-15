@@ -19,7 +19,7 @@ public class BinarySearchTreeService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    /** Build a BST in memory (no persistence). */
+    /** Build a BST in memory  */
     public TreeNode buildTree(List<Integer> numbers, boolean createBalanced) {
         TreeNode root = null;
 
@@ -37,7 +37,7 @@ public class BinarySearchTreeService {
         return root;
     }
 
-    /** Build + persist one result (the endpoint uses this). */
+    /** Build + persist one result  */
     public TreeResult processNumbers(List<Integer> numbers, boolean createBalanced) {
         TreeNode root = buildTree(numbers, createBalanced);
         try {

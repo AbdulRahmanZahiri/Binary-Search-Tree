@@ -74,9 +74,5 @@ class BinarySearchTreeServiceTest {
         // if your service ignores duplicates:
         assertEquals(1, countValue(r.getTree(), 5), "5 should appear once");
         assertEquals(1, countValue(r.getTree(), 3), "3 should appear once");
-
-        // If your policy is to allow duplicates, comment the two lines above and instead assert:
-        // assertTrue(countValue(r.getTree(), 5) >= 2);
-        // assertTrue(countValue(r.getTree(), 3) >= 2);
     }
 }
