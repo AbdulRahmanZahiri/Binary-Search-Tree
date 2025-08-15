@@ -1,6 +1,7 @@
 package com.bst.controller;
 
 import com.bst.model.TreeData;
+import com.bst.model.TreeNode;
 import com.bst.model.TreeResult;
 import com.bst.service.BinarySearchTreeService;
 import org.springframework.stereotype.Controller;
@@ -14,40 +15,42 @@ public class TreeController {
 
     private final BinarySearchTreeService binarySearchTreeService;
 
-    // constructor injection (clears the "never assigned" warning)
     public TreeController(BinarySearchTreeService binarySearchTreeService) {
         this.binarySearchTreeService = binarySearchTreeService;
     }
 
     @GetMapping("/")
-    public String home() {
-        return "redirect:/enter-numbers";
-    }
+    public String home() { return "redirect:/enter-numbers"; }
 
     @GetMapping("/enter-numbers")
-    public String enterNumbers() {
-        return "enter-numbers";
+    public String enterNumbers() { return "enter-numbers"; }
+
+    /** Preview BOTH trees without saving (used by UI to draw diagrams). */
+    @PostMapping("/api/preview-both")
+    @ResponseBody
+    public BothTreesResponse apiPreviewBoth(@RequestBody ProcessNumbersRequest request) {
+        List<Integer> nums = request.getNumbers();
+        TreeNode regular  = binarySearchTreeService.buildTree(nums, false);
+        TreeNode balanced = binarySearchTreeService.buildTree(nums, true);
+        return new BothTreesResponse(regular, balanced, nums);
     }
 
-    // JSON API the frontend calls via fetch()
+    /** Persist exactly ONE result (whichever mode the user picked). */
     @PostMapping("/api/process-numbers")
     @ResponseBody
     public TreeResult apiProcessNumbers(@RequestBody ProcessNumbersRequest request) {
         return binarySearchTreeService.processNumbers(request.getNumbers(), request.isBalanced());
     }
 
-    // (optional) keep HTML flow if someone submits without JS
-    // You can remove this if you don't need a server-rendered result page.
+    // Optional HTML flow (not used by the JS page)
     @PostMapping("/process-numbers")
     public String processNumbersForm(@RequestParam("numbers") String numbersStr,
                                      @RequestParam(value = "balanced", defaultValue = "false") boolean balanced,
                                      Model model) {
-        // Parse "7,3,9,1,5" -> List<Integer>
         List<Integer> numbers = java.util.Arrays.stream(numbersStr.split("[,\\s]+"))
                 .filter(s -> !s.isBlank())
                 .map(s -> Integer.parseInt(s.trim()))
                 .toList();
-
         TreeResult result = binarySearchTreeService.processNumbers(numbers, balanced);
         model.addAttribute("result", result);
         return "tree-result";
@@ -67,22 +70,35 @@ public class TreeController {
         return "previous-trees";
     }
 
-    // Optional JSON endpoint for history
     @GetMapping("/api/previous-trees")
     @ResponseBody
     public List<TreeData> apiPreviousTrees() {
         return binarySearchTreeService.getAllPreviousTrees();
     }
 
-    // --- DTO for the JSON request body ---
+    // --- DTOs ---
     public static class ProcessNumbersRequest {
         private List<Integer> numbers;
         private boolean balanced;
-
         public List<Integer> getNumbers() { return numbers; }
         public void setNumbers(List<Integer> numbers) { this.numbers = numbers; }
-
         public boolean isBalanced() { return balanced; }
         public void setBalanced(boolean balanced) { this.balanced = balanced; }
+    }
+
+    public static class BothTreesResponse {
+        private TreeNode regularTree;
+        private TreeNode balancedTree;
+        private List<Integer> inputNumbers;
+
+        public BothTreesResponse(TreeNode regularTree, TreeNode balancedTree, List<Integer> inputNumbers) {
+            this.regularTree = regularTree;
+            this.balancedTree = balancedTree;
+            this.inputNumbers = inputNumbers;
+        }
+
+        public TreeNode getRegularTree() { return regularTree; }
+        public TreeNode getBalancedTree() { return balancedTree; }
+        public List<Integer> getInputNumbers() { return inputNumbers; }
     }
 }

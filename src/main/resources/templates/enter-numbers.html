@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Binary Search Tree Generator</title>
     <style>
@@ -13,59 +13,55 @@
           display: flex; align-items: center; justify-content: center; padding: 24px;
         }
         .container {
-          width: 100%; max-width: 980px; background: #fff; color:#111827;
+          width: 100%; max-width: 1100px; background: #fff; color:#111827;
           border-radius: 20px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,.15);
         }
         h1 {
-          font-weight: 700; margin: 6px 0 14px; letter-spacing: .2px;
+          font-weight: 700; margin: 6px 0 18px; letter-spacing: .2px;
           background: linear-gradient(90deg,#111827,#4f46e5); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .note {
-          background: #eaf2ff; border: 1px solid #cfe1ff; color: #1f3b7b;
-          border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;
-        }
+        .note { background: #eaf2ff; border: 1px solid #cfe1ff; color: #1f3b7b;
+          border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; }
         .row { display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
-        .input {
-          flex:1 1 420px; display:flex; gap:10px; align-items:center;
-          background:#f9fafb; border:1px solid #e5e7eb; border-radius:12px; padding:10px 12px;
-        }
-        .input input[type="text"]{
-          width:100%; font-size:16px; background:transparent; border:none; outline:none; color:#111827;
-        }
-        .checkbox {
-          display:flex; align-items:center; gap:8px; user-select:none;
-          padding:8px 10px; border-radius:10px; background:#f9fafb; border:1px solid #e5e7eb;
-        }
-        .btn {
-          appearance:none; border:none; cursor:pointer; font-weight:600;
-          padding:12px 18px; border-radius:12px; transition:.2s transform, .2s box-shadow, .2s background;
-        }
+        .input { flex:1 1 420px; display:flex; gap:10px; align-items:center;
+          background:#f9fafb; border:1px solid #e5e7eb; border-radius:12px; padding:10px 12px; }
+        .input input[type="text"]{ width:100%; font-size:16px; background:transparent; border:none; outline:none; color:#111827; }
+        label.checkbox { display:flex; align-items:center; gap:8px; user-select:none;
+          padding:8px 10px; border-radius:10px; background:#f9fafb; border:1px solid #e5e7eb; }
+        .btn { appearance:none; border:none; cursor:pointer; font-weight:600; padding:12px 18px;
+          border-radius:12px; transition:.2s transform, .2s box-shadow, .2s background; }
         .btn-primary { background:#7c3aed; color:#fff; box-shadow:0 6px 14px rgba(124,58,237,.35); }
         .btn-primary:hover { transform: translateY(-1px); box-shadow:0 10px 20px rgba(124,58,237,.35); }
         .btn-secondary { background:#eef2ff; color:#4338ca; }
         .actions{ display:flex; gap:12px; flex-wrap:wrap; }
 
-        .panel {
-          margin-top: 22px; background:#f8fafc; border:1px solid #e5e7eb; border-radius:14px; padding:18px;
-        }
+        .panel { margin-top: 22px; background:#f8fafc; border:1px solid #e5e7eb; border-radius:14px; padding:18px; }
         .panel h3 { margin:0 0 10px; font-size:18px; }
-        .success, .error {
-          padding:10px 12px; border-radius:10px; font-weight:600; margin-bottom:12px; display:inline-block;
-        }
+        .success, .error { padding:10px 12px; border-radius:10px; font-weight:600; margin-bottom:12px; display:inline-block; }
         .success { background:#ecfdf5; border:1px solid #a7f3d0; color:#065f46; }
         .error { background:#fef2f2; border:1px solid #fecaca; color:#991b1b; }
-        pre {
-          margin:0; padding:14px; background:#0b1220; color:#e5e7eb; border-radius:12px; overflow:auto;
-        }
+        pre { margin:0; padding:14px; background:#0b1220; color:#e5e7eb; border-radius:12px; overflow:auto; }
         .grid { display:grid; gap:14px; grid-template-columns: 1fr 1fr; }
-        @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+        @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
         .meta { display:flex; gap:14px; flex-wrap:wrap; }
         .pill{ background:#eef2ff; color:#1f2937; border:1px solid #e5e7eb; padding:8px 10px; border-radius:999px; }
+
+        /* visualizations */
+        .viz-wrap { margin-top: 16px; }
+        .viz-grid { display:grid; gap:16px; grid-template-columns: 1fr 1fr; }
+        @media (max-width: 980px) { .viz-grid { grid-template-columns: 1fr; } }
+        .viz-card { background:#fff; border:1px solid #e5e7eb; border-radius:14px; padding:12px; }
+        .viz-card h4 { margin:6px 0 10px; }
+        svg { width:100%; height:420px; background: #fff; border-radius: 10px; }
+        .node { fill: #fff; stroke: #111827; stroke-width: 1.5; }
+        .edge { stroke: #9ca3af; stroke-width: 1.5; }
+        .label { font-size: 12px; fill: #111827; text-anchor: middle; dominant-baseline: middle; }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Binary Search Tree Generator</h1>
+
     <div class="note">
         <strong>Instructions:</strong> Enter a series of numbers separated by commas (e.g., <em>5,3,7,2,4,6,8</em>).
         The application will create a binary search tree and display the results.
@@ -73,10 +69,10 @@
 
     <form id="numberForm" class="row" autocomplete="off">
         <div class="input" style="flex:1">
-            <input id="numbers" type="text" placeholder="7,3,9,1,5" />
+            <input id="numbers" type="text" placeholder="7,3,9,1,5"/>
         </div>
         <label class="checkbox">
-            <input id="balanced" type="checkbox" />
+            <input id="balanced" type="checkbox"/>
             <span>Create Balanced BST (Bonus Feature)</span>
         </label>
         <div class="actions">
@@ -87,9 +83,9 @@
 
     <div id="resultContainer" class="panel">
         <h3>Tree Result</h3>
-        <div id="resultContent"></div>
+        <div id="resultContent"><span class="pill">Waiting for input…</span></div>
 
-        <div class="grid">
+        <div class="grid" style="margin-top:10px">
             <div>
                 <h3>Tree Structure (JSON)</h3>
                 <div id="treeVisualization"><pre>// Generated JSON will appear here</pre></div>
@@ -101,16 +97,31 @@
                 </div>
             </div>
         </div>
+
+        <div class="viz-wrap">
+            <h3 style="margin-top:18px;">Visualizations</h3>
+            <div class="viz-grid">
+                <div class="viz-card">
+                    <h4>BST</h4>
+                    <svg id="svg-bst"></svg>
+                </div>
+                <div class="viz-card">
+                    <h4>Balanced BST</h4>
+                    <svg id="svg-balanced"></svg>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<script>
-    // navigate to history
+<!-- Prevent Thymeleaf from touching this JS -->
+<script th:inline="none">
+    // navigation
     document.getElementById('showPrevBtn').addEventListener('click', () => {
       window.location.href = '/previous-trees';
     });
 
-    // helper msgs
+    // UI helpers
     function showError(msg){
       document.getElementById('resultContent').innerHTML = '<span class="error">'+msg+'</span>';
     }
@@ -118,24 +129,18 @@
       document.getElementById('resultContent').innerHTML = '<span class="success">'+msg+'</span>';
     }
 
-    // pretty-print JSON tree + info
-    function displayResult(result){
+    function displayResult(result, balancedFlag, inputCount){
       const treeVisualization = document.getElementById('treeVisualization');
       const treeInfo = document.getElementById('treeInfo');
 
       showSuccess('Tree generated successfully!');
-      const jsonPretty = JSON.stringify(result.tree, null, 2);
-      treeVisualization.innerHTML = '<pre>'+jsonPretty+'</pre>';
-
-      const balanced = (typeof result.balanced !== 'undefined') ? result.balanced : result.isBalanced;
-      const count = Array.isArray(result.inputNumbers) ? result.inputNumbers.length : 'n/a';
+      treeVisualization.innerHTML = '<pre>'+JSON.stringify(result, null, 2)+'</pre>';
 
       treeInfo.innerHTML = '';
-      const pills = [
-        ['Balanced', String(!!balanced)],
-        ['Input Count', String(count)]
-      ];
-      pills.forEach(([k,v])=>{
+      [
+        ['Balanced', String(!!balancedFlag)],
+        ['Input Count', String(inputCount)]
+      ].forEach(([k,v])=>{
         const span = document.createElement('span');
         span.className = 'pill';
         span.textContent = k+': '+v;
@@ -143,12 +148,109 @@
       });
     }
 
-    // submit -> call JSON API
+    // --- SVG tree drawing ---
+    function getDepth(node){ return node ? 1 + Math.max(getDepth(node.left), getDepth(node.right)) : 0; }
+    function countNodes(node){ return node ? 1 + countNodes(node.left) + countNodes(node.right) : 0; }
+    function layoutInorder(node, depth, acc){
+      if(!node) return;
+      layoutInorder(node.left, depth+1, acc);
+      acc.order++;
+      acc.positions.push({ value: node.value, depth, order: acc.order, node });
+      layoutInorder(node.right, depth+1, acc);
+    }
+    function drawTree(svgId, tree){
+      const svg = document.getElementById(svgId);
+      svg.innerHTML = '';
+      if(!tree){
+        svg.innerHTML = '<text x="10" y="20" class="label">Empty tree</text>';
+        return;
+      }
+
+      const depth = getDepth(tree);
+      const n = countNodes(tree);
+
+      const marginX = 24, marginY = 24;
+      const hStep = 60;          // horizontal spacing
+      const vStep = 70;          // vertical spacing
+      const width  = marginX*2 + (n + 1) * hStep;
+      const height = marginY*2 + (Math.max(depth,1)) * vStep;
+      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+      const acc = { order: 0, positions: [] };
+      layoutInorder(tree, 0, acc);
+
+      const coord = new Map();
+      const nodes = [];
+      acc.positions.forEach(p => {
+        const x = marginX + p.order * hStep;
+        const y = marginY + (p.depth) * vStep;
+        coord.set(p.node, {x,y, value:p.value});
+        nodes.push({x,y,value:p.value,node:p.node});
+      });
+
+      // edges
+      nodes.forEach(nod => {
+        const node = nod.node;
+        const from = coord.get(node);
+        if(node.left){
+          const to = coord.get(node.left);
+          addLine(svg, from.x, from.y, to.x, to.y);
+        }
+        if(node.right){
+          const to = coord.get(node.right);
+          addLine(svg, from.x, from.y, to.x, to.y);
+        }
+      });
+
+      // nodes on top
+      nodes.forEach(nod => addNode(svg, nod.x, nod.y, String(nod.value)));
+    }
+    function addLine(svg, x1,y1,x2,y2){
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+      line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+      line.setAttribute('class', 'edge');
+      svg.appendChild(line);
+    }
+    function addNode(svg, cx, cy, text){
+      const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+      const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      circle.setAttribute('cx', cx); circle.setAttribute('cy', cy);
+      circle.setAttribute('r', 16); circle.setAttribute('class', 'node');
+      const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+      label.setAttribute('x', cx); label.setAttribute('y', cy);
+      label.setAttribute('class', 'label');
+      label.textContent = text;
+      g.appendChild(circle); g.appendChild(label);
+      svg.appendChild(g);
+    }
+
+    // API helpers
+    async function previewBoth(numbers){
+      const resp = await fetch('/api/preview-both', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ numbers, balanced: false })
+      });
+      if(!resp.ok) throw new Error('Preview failed ('+resp.status+')');
+      return resp.json();
+    }
+    async function persist(numbers, balanced){
+      const resp = await fetch('/api/process-numbers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ numbers, balanced })
+      });
+      if(!resp.ok) throw new Error('Save failed ('+resp.status+')');
+      return resp.json();
+    }
+
+    // submit handler
     document.getElementById('numberForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const raw = document.getElementById('numbers').value.trim();
-      const balanced = document.getElementById('balanced').checked;
+      const makeBalanced = document.getElementById('balanced').checked;
 
       if (!raw) return showError('Please enter some numbers');
 
@@ -158,18 +260,24 @@
       }
 
       try {
-        const resp = await fetch('/api/process-numbers', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ numbers, balanced })
-        });
-        if (!resp.ok) throw new Error('Failed ('+resp.status+'): ' + await resp.text());
-        const result = await resp.json();
-        displayResult(result);
+        // 1) preview both (no DB writes)
+        const preview = await previewBoth(numbers);
+        drawTree('svg-bst',       preview.regularTree);
+        drawTree('svg-balanced',  preview.balancedTree);
+
+        // show JSON/info for whichever option is selected
+        const chosen = makeBalanced ? preview.balancedTree : preview.regularTree;
+        displayResult(chosen, makeBalanced, numbers.length);
+
+        // 2) persist exactly one row for the selected option
+        await persist(numbers, makeBalanced);
+
       } catch (err) {
-        showError('Error processing numbers: ' + err.message);
+        showError('Error: ' + err.message);
         document.getElementById('treeVisualization').innerHTML = '<pre>// no data</pre>';
         document.getElementById('treeInfo').innerHTML = '<span class="pill">No data</span>';
+        document.getElementById('svg-bst').innerHTML = '';
+        document.getElementById('svg-balanced').innerHTML = '';
       }
     });
 </script>
