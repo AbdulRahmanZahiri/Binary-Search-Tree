@@ -11,8 +11,6 @@ services:
       MYSQL_ROOT_PASSWORD: rootpass
     ports:
       - "3307:3306"         # <-- host:container
-    # You don't need to force the auth plugin; the driver supports the default.
-    # command: --default-authentication-plugin=mysql_native_password
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
